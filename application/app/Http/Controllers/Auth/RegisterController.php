@@ -80,12 +80,12 @@ class RegisterController extends Controller
         ]);
 
         $settings['user_id'] = $user->id;
-        $settings['subscribe'] = $data['subscribe'];
+        $settings['subscribed'] = isset($data['subscribe']) ? 1 : 0;
 
         UserSettings::create($settings);
 
         // add user to subscribe queue - this should be moved to something async but i'm too stupid to figure it at the moment
-        if (isset ($data['subscribe'])) {
+        if ($settings['subscribed'] == 1) {
             try {
                 $response = $this->mailgunService->addSubscriber($user);
             } catch(Exception $e) {

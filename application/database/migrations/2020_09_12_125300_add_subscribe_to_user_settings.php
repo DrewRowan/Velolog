@@ -14,7 +14,7 @@ class AddSubscribeToUserSettings extends Migration
     public function up()
     {
         Schema::table('user_settings', function (Blueprint $table) {
-            $table->boolean('subscribed');
+            $table->boolean('subscribed')->nullable();
         });
     }
 
