@@ -6,7 +6,7 @@ use App\User;
 use App\Repositories\Interfaces\BikeRepositoryInterface;
 use App\Repositories\Interfaces\DistanceRepositoryInterface;
 use App\Models\StravaBikeModel;
-use app\Services\StravaService;
+use App\Services\StravaService;
 use App\StravaSettings;
 use Exception;
 use GuzzleHttp\Client;

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Exception;
 use GuzzleHttp\Client;
-use app\Services\StravaService;
+use App\Services\StravaService;
 use App\StravaSettings;
 use App\Repositories\Interfaces\BikeRepositoryInterface;
 use App\Repositories\Interfaces\DistanceRepositoryInterface;
