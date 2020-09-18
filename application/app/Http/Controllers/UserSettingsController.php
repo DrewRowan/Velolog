@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\StravaBikeModel;
-use app\Services\StravaService;
+use App\Services\StravaService;
 use App\StravaSettings;
 use App\Repositories\Interfaces\BikeRepositoryInterface;
 use App\User;
@@ -24,6 +24,7 @@ class UserSettingsController extends Controller
     private $client_secret;
     private $redirect_uri;
     private $bikeRepository;
+    private $stravaService;
 
     public function __construct(BikeRepositoryInterface $bikeRepository)
     {
@@ -31,6 +32,7 @@ class UserSettingsController extends Controller
         $this->client_id = env('CT_STRAVA_CLIENT_ID', ''); # Strava Client ID
         $this->client_secret = env('CT_STRAVA_SECRET_ID', ''); # Strava Secrect
         $this->redirect_uri = env('CT_STRAVA_REDIRECT_URI', ''); # Strava Redirect URi
+        $this->stravaService = new StravaService();
     }
 
     public function index() {
@@ -91,8 +93,7 @@ class UserSettingsController extends Controller
 
     private function saveSettings($code)
     {
-        $stravaService = new StravaService();
-        $token = $stravaService->getToken($code);
+        $token = $this->stravaService->getToken($code);
 
         $strava_settings = new StravaSettings;
         $strava_settings->strava_authorised = 1;
