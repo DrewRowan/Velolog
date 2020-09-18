@@ -14,7 +14,7 @@ class AddDateOfWorkToLog extends Migration
     public function up()
     {
         Schema::table('maintenance_logs', function (Blueprint $table) {
-            $table->date('work_done_at');
+            $table->date('work_done_at')->nullable();
         });
     }
 
