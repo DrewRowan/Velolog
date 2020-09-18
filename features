@@ -11,3 +11,5 @@ add photos to log
 mechanic portal
     - appointment booking
 reset max distance
+handle mixing of strava bikes and custom bikes
+handle deletion of bikes (logs remain)

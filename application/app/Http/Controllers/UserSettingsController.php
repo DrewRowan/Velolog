@@ -6,6 +6,7 @@ use App\Models\StravaBikeModel;
 use App\Services\StravaService;
 use App\StravaSettings;
 use App\Repositories\Interfaces\BikeRepositoryInterface;
+use App\Repositories\Interfaces\DistanceRepositoryInterface;
 use App\User;
 use App\UserSettings;
 use CodeToad\Strava\Strava;
@@ -24,11 +25,15 @@ class UserSettingsController extends Controller
     private $client_secret;
     private $redirect_uri;
     private $bikeRepository;
+    private $distanceRepository;
     private $stravaService;
 
-    public function __construct(BikeRepositoryInterface $bikeRepository)
+    public function __construct(
+        BikeRepositoryInterface $bikeRepository,
+        DistanceRepositoryInterface $distanceRepository)
     {
         $this->bikeRepository = $bikeRepository;
+        $this->distanceRepository = $distanceRepository;
         $this->client_id = env('CT_STRAVA_CLIENT_ID', ''); # Strava Client ID
         $this->client_secret = env('CT_STRAVA_SECRET_ID', ''); # Strava Secrect
         $this->redirect_uri = env('CT_STRAVA_REDIRECT_URI', ''); # Strava Redirect URi
@@ -77,7 +82,9 @@ class UserSettingsController extends Controller
         $code = $request->input('code');
         $this->saveSettings($code);
 
-        $stravaBikeModel = new StravaBikeModel($this->bikeRepository);
+        $stravaBikeModel = new StravaBikeModel(
+            $this->bikeRepository,
+            $this->distanceRepository);
         $stravaBikeModel->fetchStravaGear();
 
         return redirect('/home')->withSuccess('Strava sync successful!');;
@@ -85,7 +92,9 @@ class UserSettingsController extends Controller
 
     public function getStravaGear()
     {
-        $stravaBikeModel = new StravaBikeModel($this->bikeRepository);
+        $stravaBikeModel = new StravaBikeModel(
+            $this->bikeRepository,
+            $this->distanceRepository);
         $stravaBikeModel->fetchStravaGear();
 
         return redirect('/settings')->withSuccess('Bikes synced from Strava!');

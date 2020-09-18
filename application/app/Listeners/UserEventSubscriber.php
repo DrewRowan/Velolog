@@ -24,8 +24,8 @@ class UserEventSubscriber
     /**
      * Handle user login events.
      */
-    public function handleUserLogin($event) {
-
+    public function handleUserLogin($event)
+    {
         // check if strava settings set yet
         $stravaSettings = StravaSettings::where('user_id', Auth::user()->id)->first();
 
