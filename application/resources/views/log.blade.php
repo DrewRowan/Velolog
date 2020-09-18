@@ -53,7 +53,8 @@
                             <option value="Tyre">Tyre</option>
                             <option value="Wheel">Wheel</option>
                         </select>
-                        <input class="form-control" type="number" placeholder="How far has the bike travelled" name="distance" id="distance" @if (!empty($distances)) {{ "readonly='readonly'" }} @endif required />
+                        <input class="form-control" type="number" placeholder="How far has the bike travelled" name="distance" id="distance" required />
+                        <input class="form-control" type="date" placeholder="Date of work" name="work_done_at" id="work_done_at" required />
                         <textarea placeholder="Description of work carried out..." name="note" class="form-control"></textarea>
                         <select name="grease_monkey" class="form-control" required>
                             <option value="" disabled selected>Who did the work?</option>
@@ -61,7 +62,7 @@
                             <option value="friend">Friend</option>
                             <option value="professional">Professional</option>
                         </select>
-                        <input class="form-control" type="submit" value="Record work" />
+                        <input class="form-control" style="background:#ffdac1" type="submit" value="Record work" />
                     </form>
                     <hr class="my-4" />
                 </div>
@@ -129,7 +130,7 @@
                                     @endif
                                     - {{ $log->$units }}{{ $units == 'metric' ? 'km' : 'mi' }}</h5>
                                 <p>{{ mb_strimwidth($log->note, 0, 30, "...") }}</p>
-                                <p class="text-right mb-0"><small>{{ $log->created_at }}</small></p>
+                                <p class="text-right mb-0"><small>{{ $log->work_done_at }}</small></p>
                             </div>
                         </div>
                     @endforeach
@@ -138,6 +139,8 @@
             </div>
 
             <script>
+                document.getElementById('work_done_at').valueAsDate = new Date();
+
                 $( document ).ready( function() {
                     var miles = {
                     @foreach ($distances as $distance)

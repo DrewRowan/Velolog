@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 class MaintenanceLog extends Model
 {
-    protected $fillable = ['type', 'bike_id', 'component', 'note', 'grease_monkey', 'distance_id'];
+    protected $fillable = ['type', 'bike_id', 'component', 'note', 'grease_monkey', 'distance_id', 'work_done_at'];
 
     use SoftDeletes;
 
@@ -20,7 +20,7 @@ class MaintenanceLog extends Model
             ->select('maintenance_logs.*', 'bikes.name as bike_name', 'distances.metric', 'distances.imperial')
             ->where('bikes.user_id', $userId)
             ->where('maintenance_logs.deleted_at', NULL)
-            ->orderBy('maintenance_logs.created_at', 'desc')
+            ->orderBy('maintenance_logs.work_done_at', 'desc')
             ->get();
 
     }
