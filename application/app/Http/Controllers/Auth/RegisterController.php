@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Foundation\Console\VendorPublishCommand;
+
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\Services\MailgunService;
-use app\Services\StravaService;
+use App\Services\StravaService;
 use App\User;
 use App\UserSettings;
 use Exception;
@@ -35,6 +37,7 @@ class RegisterController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::HOME;
     private $mailgunService;
+    private $stravaService;
 
     /**
      * Create a new controller instance.
@@ -45,6 +48,7 @@ class RegisterController extends Controller
     {
         $this->middleware('guest');
         $this->mailgunService = new MailgunService();
+        $this->stravaService = new StravaService();
     }
 
     /**
@@ -94,8 +98,7 @@ class RegisterController extends Controller
         }
 
         if (isset($data['connectstrava'])) {
-            $stravaService = new StravaService();
-            $this->redirectTo = $stravaService->returnStravaUrl();
+            $this->redirectTo = $this->stravaService->returnStravaUrl();
         }
 
         return $user;
