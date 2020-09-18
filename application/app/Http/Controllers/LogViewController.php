@@ -68,7 +68,7 @@ class LogViewController extends Controller
         $requestObject = $request->all();
         $id = $requestObject['deleteid']; 
 
-        $success = $this->maintenanceLogRepository->where('id', $id)->delete();
+        $success = $this->maintenanceLogRepository->deleteLogsById($id);
 
         return redirect('home')->withSuccess('Log deleted!');;
     }
